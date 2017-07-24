@@ -1,0 +1,4 @@
+enable virtualisasi esxi 5.5
+/vmfs/volumes/datastore2 edit .vmx file of vm
+tambahkan berikut:
+vhv.enable = "TRUE"

@@ -1,0 +1,39 @@
+yum -y update
+
+## conditional
+# yum -y install wget
+# wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# rpm -ivh epel-release-latest-7.noarch.rpm
+# yum --enablerepo=epel info erlang
+# yum -y --enablerepo=epel install erlang
+
+## cek domain
+## cek selinux
+
+systemctl disable firewalld
+systemctl stop firewalld
+systemctl disable NetworkManager
+systemctl stop NetworkManager
+systemctl enable network
+systemctl start network
+
+# snapshoot
+
+yum install -y centos-release-openstack-newton #mitaka,newton,ocata or etc
+yum update -y
+yum install -y openstack-packstack
+
+# withou lbaas
+# packstack --allinone --provision-demo=y --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:ens160 --os-neutron-ml2-type-drivers=vxlan,flat
+
+# with lbaas
+packstack --allinone --provision-demo=y \
+ --os-neutron-ovs-bridge-mappings=extnet:br-ex \
+--os-neutron-ovs-bridge-interfaces=br-ex:ens160 \
+--os-neutron-ml2-type-drivers=vxlan,flat \
+--os-heat-install=y --os-heat-cfn-install=y \
+--os-sahara-install=y --os-trove-install=y \
+--os-neutron-lbaas-install=y \
+--keystone-admin-passwd=mierebustelur
+
+reboot
