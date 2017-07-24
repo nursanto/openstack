@@ -1,0 +1,25 @@
+echo "tes server throughput"
+echo "#################"
+for i in {1..15}; do dd if=/dev/zero of=data-tulis bs=1G count=1 oflag=dsync; rm data-tulis;done
+echo "#################"
+echo "tes server throughput done"
+echo " "
+echo " "
+echo " "
+echo "tes server latency"
+echo "#################"
+for i in {1..15}; do dd if=/dev/zero of=data-tulis-2 bs=512 count=1000 oflag=dsync;rm data-tulis-2;done
+echo "#################"
+echo "tes server latency done"
+
+
+
+echo "server throughput"
+echo "#################"
+for i in {1..5}; do dd if=/dev/zero of=data-tulis bs=1M count=1 oflag=dsync; rm data-tulis;done
+
+
+
+echo "server throughput"
+echo "#################"
+for i in {1..5}; do d if=/dev/zero of=data-tulis-2 bs=512 count=10 oflag=dsync;rm data-tulis-2;done

@@ -1,0 +1,133 @@
+# begin crush map
+tunable choose_local_tries 0
+tunable choose_local_fallback_tries 0
+tunable choose_total_tries 50
+tunable chooseleaf_descend_once 1
+tunable straw_calc_version 1
+
+# devices
+device 0 osd.0
+device 1 osd.1
+device 2 osd.2
+device 3 osd.3
+
+# types
+type 0 osd
+type 1 host
+type 2 chassis
+type 3 rack
+type 4 row
+type 5 pdu
+type 6 pod
+type 7 room
+type 8 datacenter
+type 9 region
+type 10 root
+
+# buckets
+host node-5 {
+        id -2           # do not change unnecessarily
+        # weight 0.080
+        alg straw
+        hash 0  # rjenkins1
+        item osd.0 weight 0.080
+}
+host node-6 {
+        id -3           # do not change unnecessarily
+        # weight 0.080
+        alg straw
+        hash 0  # rjenkins1
+        item osd.1 weight 0.080
+}
+host node-1 {
+        id -4           # do not change unnecessarily
+        # weight 0.080
+        alg straw
+        hash 0  # rjenkins1
+        item osd.3 weight 0.080
+}
+host node-7 {
+        id -5           # do not change unnecessarily
+        # weight 0.080
+        alg straw
+        hash 0  # rjenkins1
+        item osd.2 weight 0.080
+}
+rack rack-1 {
+		id -6		# do not change unnecessarily
+		# weight 0.080
+		alg straw
+		hash 0	# rjenkins1
+		item node-5 weight 0.080
+}
+rack rack-2 {
+		id -7		# do not change unnecessarily
+		# weight 0.080
+		alg straw
+		hash 0	# rjenkins1
+		item node-6 weight 0.080
+}
+rack rack-3 {
+		id -8		# do not change unnecessarily
+		# weight 0.160
+		alg straw
+		hash 0	# rjenkins1
+		item node-7 weight 0.080
+		item node-1 weight 0.080
+}
+datacenter datacenter-1 {
+		id -9		# do not change unnecessarily
+		# weight 0.160
+		alg straw
+		hash 0	# rjenkins1
+		item rack-1 weight 0.080
+		item rack-2 weight 0.080
+}
+
+datacenter datacenter-2 {
+		id -10		# do not change unnecessarily
+		# weight 0.160
+		alg straw
+		hash 0	# rjenkins1
+		item rack-3 weight 0.160
+}
+
+root default {
+        id -1           # do not change unnecessarily
+        # weight 0.320
+        alg straw
+        hash 0  # rjenkins1
+        item datacenter-1 weight 0.160
+        item datacenter-2 weight 0.160
+}
+
+# rules
+rule replicated_ruleset {
+        ruleset 0
+        type replicated
+        min_size 1
+        max_size 10
+        step take default
+        step chooseleaf firstn 0 type host
+        step emit
+}
+rule images {
+        ruleset 1
+        type replicated
+        min_size 1
+        max_size 10
+        step take rack-3
+        step chooseleaf firstn 0 type host
+        step emit
+}
+rule computes {
+        ruleset 2
+        type replicated
+        min_size 1
+        max_size 10
+        step take default
+        step chooseleaf firstn 0 type host
+        step emit
+}
+
+# end crush map

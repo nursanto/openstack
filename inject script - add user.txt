@@ -1,0 +1,38 @@
+#!/bin/sh
+# create password for root
+echo -e "admin123\nadmin123" | (passwd --stdin root)
+
+# create user and password
+# namauser
+namauser=adminuser
+# password
+password=adminuser
+
+useradd $namauser
+passwd $namauser << EOF
+$password
+$password
+EOF
+
+## add to sudoers
+echo "$namauser ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/$namauser
+chmod 0440 /etc/sudoers.d/$namauser
+
+
+# inject file create simple http service
+
+yum -y install httpd php
+systemctl enable httpd
+systemctl start httpd
+cat <<EOF > /var/www/html/hostname.php
+<?php echo "Hello, My name is " . php_uname('n'); ?>
+EOF
+
+# enable login use password auth
+# vi /etc/ssh/sshd_config
+
+# Match User rishee
+#    PasswordAuthentication yes
+#    KbdInteractiveAutentication yes
+
+# sudo service ssh restart

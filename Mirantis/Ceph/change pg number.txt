@@ -1,0 +1,70 @@
+ceph osd pool get rbd pg_num
+ceph osd pool create rbd-new 16
+rados cppool rbd rbd-new
+ceph osd pool delete rbd rbd  --yes-i-really-really-mean-it
+ceph osd pool rename rbd-new rbd
+ceph osd pool get rbd pg_num
+
+ceph osd pool get compute pg_num
+ceph osd pool create compute-new 16
+rados cppool compute compute-new
+ceph osd pool delete compute compute  --yes-i-really-really-mean-it
+ceph osd pool rename compute-new compute
+ceph osd pool get compute pg_num
+
+ceph osd pool get .rgw pg_num
+ceph osd pool create .rgw-new 16
+rados cppool .rgw .rgw-new
+ceph osd pool delete .rgw .rgw  --yes-i-really-really-mean-it
+ceph osd pool rename .rgw-new .rgw
+ceph osd pool get .rgw pg_num
+
+ceph osd pool get images pg_num
+ceph osd pool create images-new 16
+rados cppool images images-new
+ceph osd pool delete images images  --yes-i-really-really-mean-it
+ceph osd pool rename images-new images
+ceph osd pool get images pg_num
+
+ceph osd pool get volumes pg_num
+ceph osd pool create volumes-new 16
+rados cppool volumes volumes-new
+ceph osd pool delete volumes volumes  --yes-i-really-really-mean-it
+ceph osd pool rename volumes-new volumes
+ceph osd pool get volumes pg_num
+
+ceph osd pool get backups pg_num
+ceph osd pool create backups-new 16
+rados cppool backups backups-new
+ceph osd pool delete backups backups  --yes-i-really-really-mean-it
+ceph osd pool rename backups-new backups
+ceph osd pool get backups pg_num
+
+ceph osd pool get .rgw.root pg_num
+ceph osd pool create .rgw.root-new 16
+rados cppool .rgw.root .rgw.root-new
+ceph osd pool delete .rgw.root .rgw.root  --yes-i-really-really-mean-it
+ceph osd pool rename .rgw.root-new .rgw.root
+ceph osd pool get .rgw.root pg_num
+
+ceph osd pool get .rgw.control pg_num
+ceph osd pool create .rgw.control-new 16
+rados cppool .rgw.control .rgw.control-new
+ceph osd pool delete .rgw.control .rgw.control --yes-i-really-really-mean-it
+ceph osd pool rename .rgw.control-new .rgw.control
+ceph osd pool get .rgw.control pg_num
+
+ceph osd pool get .rgw.gc pg_num
+ceph osd pool create .rgw.gc-new 16
+rados cppool .rgw.gc .rgw.gc-new
+ceph osd pool delete .rgw.gc .rgw.gc  --yes-i-really-really-mean-it
+ceph osd pool rename .rgw.gc-new .rgw.gc
+ceph osd pool get .rgw.gc pg_num
+
+ceph osd pool get .users.uid pg_num
+ceph osd pool create .users.uid-new 16
+rados cppool .users.uid .users.uid-new
+ceph osd pool delete .users.uid .users.uid  --yes-i-really-really-mean-it
+ceph osd pool rename .users.uid-new .users.uid
+ceph osd pool get .users.uid pg_num
+
