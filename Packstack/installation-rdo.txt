@@ -26,7 +26,7 @@ yum install -y openstack-packstack
 # withou lbaas
 # packstack --allinone --provision-demo=y --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:ens160 --os-neutron-ml2-type-drivers=vxlan,flat
 
-# with lbaas
+# enable lbaas ceilometer heat
 packstack --allinone --provision-demo=y \
  --os-neutron-ovs-bridge-mappings=extnet:br-ex \
 --os-neutron-ovs-bridge-interfaces=br-ex:ens160 \
@@ -34,6 +34,9 @@ packstack --allinone --provision-demo=y \
 --os-heat-install=y --os-heat-cfn-install=y \
 --os-sahara-install=y --os-trove-install=y \
 --os-neutron-lbaas-install=y \
---keystone-admin-passwd=mierebustelur
+--keystone-admin-passwd=mierebustelur \
+--os-ceilometer-install=y \
+--os-heat-install=y --os-heat-cloudwatch-install=y \
+--os-heat-cfn-install=y 
 
 reboot
