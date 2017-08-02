@@ -1,0 +1,38 @@
+# see the list of all available meters for all the resources
+stack@vlab-XX:~$ ceilometer meter-list
+
+# see the list of samples for the image meter
+stack@vlab-XX:~$ ceilometer sample-list -m image
+
+# Look at the consolidated statistics for the image meter:
+stack@vlab-XX:~$ ceilometer statistics -m image
+
+# List the meters gathered for the instance:
+stack@vlab-XX:~$ ceilometer meter-list -q resource_id=<VM ID>
+
+# to see the data samples for cpu meter of c_vm instance:
+stack@vlab-XX:~$ ceilometer sample-list -m cpu -q resource_id=<VM ID>
+stack@vlab-XX:~$ ceilometer sample-list --meter cpu_util --query resource=<VM ID>
+
+# Let’s look at the statistics for the cpu_util meter of c_vm instance in 1 hour intervals:
+stack@vlab-01:~$ ceilometer statistics -m cpu_util -p 3600 -q resource_id=<VM ID>
+
+# Create an alarm based on the upper bound on the CPU utilization for the instance we created:
+stack@vlab-XX:~$ ceilometer alarm-threshold-create --name cpu_high --description 'running hot' -m cpu_util --statistic avg --period 300 \
+                 --evaluation-periods 3 --comparison-operator gt --threshold 70.0 --alarm-action 'log://' -q resource_id=<VM ID>
+
+# List the created alarm and note its ID:
+stack@vlab-XX:~$ ceilometer alarm-list
+
+# Modify the cpu_high alarm to increase the threshold:
+stack@vlab-XX:~$ ceilometer alarm-update --threshold 75 -a <alarm ID>
+
+# Look at the history of an alarm:
+stack@vlab-XX:~$ ceilometer alarm-history -a <alarm ID>
+
+# Disable the cpu_high alarm:
+stack@vlab-XX:~$ ceilometer alarm-update --enabled False -a <alarm ID>
+
+# Delete the cpu_high alarm:
+stack@vlab-XX:~$ ceilometer alarm-delete -a <alarm ID>
+
