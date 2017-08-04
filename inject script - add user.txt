@@ -30,4 +30,4 @@ EOF
 
 # enable login use password auth
 sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-sudo service ssh restart
+sudo systemctl restart sshd
