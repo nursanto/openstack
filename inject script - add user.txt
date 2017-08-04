@@ -29,10 +29,5 @@ cat <<EOF > /var/www/html/hostname.php
 EOF
 
 # enable login use password auth
-# vi /etc/ssh/sshd_config
-
-# Match User rishee
-#    PasswordAuthentication yes
-#    KbdInteractiveAutentication yes
-
-# sudo service ssh restart
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sudo service ssh restart
