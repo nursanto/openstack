@@ -1,26 +1,28 @@
 #!/bin/sh
-# create password for root
-echo -e "admin123\nadmin123" | (passwd --stdin root)
+# ini untuk centos-7, untuk distro lain silahkan disesuaikan
 
-# create user and password
-# namauser
-namauser=adminuser
-# password
-password=adminuser
+rootpaswd=nursanto123
+namauser=nursanto
 
+# buat password untuk root
+echo -e "$rootpaswd\nrootpaswd" | (passwd --stdin root)
+
+# tambah user , bikin paswd & tambah ke sudoers
 useradd $namauser
 passwd $namauser << EOF
-$password
-$password
+$namauser
+$namauser
 EOF
-
-## add to sudoers
 echo "$namauser ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/$namauser
 chmod 0440 /etc/sudoers.d/$namauser
 
+# enable login dengan password & keypair
+sed -i "s/.*RSAAuthentication.*/RSAAuthentication yes/g" /etc/ssh/sshd_config
+sed -i "s/.*PubkeyAuthentication.*/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
+sed -i "s/.*PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+systemctl restart sshd
 
-# inject file create simple http service
-
+# buat simple http service
 yum -y install httpd php
 systemctl enable httpd
 systemctl start httpd
@@ -28,6 +30,3 @@ cat <<EOF > /var/www/html/hostname.php
 <?php echo "Hello, My name is " . php_uname('n'); ?>
 EOF
 
-# enable login use password auth
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-systemctl restart sshd
