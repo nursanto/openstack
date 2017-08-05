@@ -1,0 +1,62 @@
+nova list
+nova image-create <ID or Name> <new image name>
+nova image-list
+glance image-download <ID or Name> --file <local file name> 
+glance image-create --name <Name of image to create in Openstack> --disk-format=qcow2 --container-format=bare --file <local image file to upload>
+
+
+#example
+#example
+[root@node-222 ~(keystone_admin)]# nova list
++--------------------------------------+--------+---------+------------+-------------+------------------+
+| ID                                   | Name   | Status  | Task State | Power State | Networks         |
++--------------------------------------+--------+---------+------------+-------------+------------------+
+| 6bb346b6-b078-4786-b414-25ecd32ac7f1 | centos | SHUTOFF | -          | Shutdown    | internal=1.1.1.6 |
++--------------------------------------+--------+---------+------------+-------------+------------------+
+[root@node-222 ~(keystone_admin)]# nova image-create 6bb346b6-b078-4786-b414-25ecd32ac7f1 centos7-httpd-service
+[root@node-222 ~(keystone_admin)]# nova image-list
++--------------------------------------+-----------------------+--------+--------------------------------------+
+| ID                                   | Name                  | Status | Server                               |
++--------------------------------------+-----------------------+--------+--------------------------------------+
+| 83726c3b-ea5e-4b51-a5cf-967ff90ca251 | centos                | ACTIVE |                                      |
+| fd8e8332-51e7-4e39-b41e-84242bf60cab | centos-httpd          | ACTIVE | 6bb346b6-b078-4786-b414-25ecd32ac7f1 |
+| fc27a498-873f-4892-b963-58fac681cd8e | centos7               | ACTIVE | 19ac7349-3098-48dc-b07e-a8988426224c |
+| 857655f4-e008-4eca-be01-afad1b85b283 | centos7-httpd-service | ACTIVE | 6bb346b6-b078-4786-b414-25ecd32ac7f1 |
+| 9c269902-2dd8-445e-b181-2442e8cb9745 | cirros                | ACTIVE |                                      |
+| 014e6209-ffe3-411a-b706-51cba74ac0d5 | ubuntu                | ACTIVE |                                      |
++--------------------------------------+-----------------------+--------+--------------------------------------+
+[root@node-222 ~(keystone_admin)]# glance image-download 857655f4-e008-4eca-be01-afad1b85b283 --file centos7-httpd-service.img
+[root@node-222 ~(keystone_admin)]#
+[root@node-222 ~(keystone_admin)]# glance image-create --name centos-7-http-service-new --disk-format=qcow2 --container-format=bare --file centos7-httpd-service.img    +------------------+--------------------------------------+
+| Property         | Value                                |
++------------------+--------------------------------------+
+| checksum         | eb3192518a62b246663db971e0befb60     |
+| container_format | bare                                 |
+| created_at       | 2017-08-05T12:53:15Z                 |
+| disk_format      | qcow2                                |
+| id               | ec1ccb95-8658-4680-a691-647efdbb3b6c |
+| min_disk         | 0                                    |
+| min_ram          | 0                                    |
+| name             | centos-7-http-service-new            |
+| owner            | 95d251c5c30b4dc88e225ec6041ed42b     |
+| protected        | False                                |
+| size             | 1048838144                           |
+| status           | active                               |
+| tags             | []                                   |
+| updated_at       | 2017-08-05T12:53:21Z                 |
+| virtual_size     | None                                 |
+| visibility       | shared                               |
++------------------+--------------------------------------+
+[root@node-222 ~(keystone_admin)]#  glance image-list
++--------------------------------------+---------------------------+
+| ID                                   | Name                      |
++--------------------------------------+---------------------------+
+| 83726c3b-ea5e-4b51-a5cf-967ff90ca251 | centos                    |
+| ec1ccb95-8658-4680-a691-647efdbb3b6c | centos-7-http-service-new |
+| fd8e8332-51e7-4e39-b41e-84242bf60cab | centos-httpd              |
+| fc27a498-873f-4892-b963-58fac681cd8e | centos7                   |
+| 857655f4-e008-4eca-be01-afad1b85b283 | centos7-httpd-service     |
+| 9c269902-2dd8-445e-b181-2442e8cb9745 | cirros                    |
+| 014e6209-ffe3-411a-b706-51cba74ac0d5 | ubuntu                    |
++--------------------------------------+---------------------------+
+[root@node-222 ~(keystone_admin)]#
