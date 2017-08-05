@@ -1,0 +1,9 @@
+<?php
+ $ip=$_SERVER['SERVER_ADDR'];
+ $port=$_SERVER['SERVER_PORT'];
+ echo "Hello, My name is " . php_uname('n');
+ echo  "<br />";
+ echo "IP Address= $ip";
+ echo  "<br />";
+ echo "Port = $port";
+?>
