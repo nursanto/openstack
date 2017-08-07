@@ -90,7 +90,7 @@ resources:
       min_size: 1
       max_size: 3
       resource:
-        type: lb-server.yaml
+        type: https://github.com/nursanto/openstack/blob/master/script_lbaas/lb-server.yaml
         properties:
           flavor: {get_param: flavor}
           image: {get_param: image}
