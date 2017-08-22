@@ -1,0 +1,88 @@
+Create fixed ip & asign to instance
+
+neutron port-create --fixed-ip subnet_id=<subnet-id>,ip_address=<fixed-ip-addres> --name <port-name> <net-id>
+nova boot --flavor <flavor-id> --key-name <keypair-name> --image <image-id> --security-groups <securitygroup-id> --nic port-id=<port-id> <instance-name>
+
+
+#example:
+
+[root@node-222-2nd ~(keystone_admin)]# neutron port-create --fixed-ip subnet_id=c3b94534-01fc-42c8-b86a-d299f66aea8f,ip_address=1.1.1.200 \
+> --name fixedip-1 7cc2615d-6c4d-433a-8e28-fb789d7da602
+neutron CLI is deprecated and will be removed in the future. Use openstack CLI instead.
+Created a new port:
++-----------------------+----------------------------------------------------------------------------------+
+| Field                 | Value                                                                            |
++-----------------------+----------------------------------------------------------------------------------+
+| admin_state_up        | True                                                                             |
+| allowed_address_pairs |                                                                                  |
+| binding:host_id       |                                                                                  |
+| binding:profile       | {}                                                                               |
+| binding:vif_details   | {}                                                                               |
+| binding:vif_type      | unbound                                                                          |
+| binding:vnic_type     | normal                                                                           |
+| created_at            | 2017-08-22T02:56:42Z                                                             |
+| description           |                                                                                  |
+| device_id             |                                                                                  |
+| device_owner          |                                                                                  |
+| extra_dhcp_opts       |                                                                                  |
+| fixed_ips             | {"subnet_id": "c3b94534-01fc-42c8-b86a-d299f66aea8f", "ip_address": "1.1.1.200"} |
+| id                    | acbfd43b-fa6a-4299-90b9-70f9dc5eb5f6                                             |
+| mac_address           | fa:16:3e:58:4e:7f                                                                |
+| name                  | fixedip-1                                                                        |
+| network_id            | 7cc2615d-6c4d-433a-8e28-fb789d7da602                                             |
+| project_id            | 4bfc44be45494c43abe00e5a358feed9                                                 |
+| revision_number       | 4                                                                                |
+| security_groups       | 54dd44d0-a528-4a27-87e7-561b1e8c7077                                             |
+| status                | DOWN                                                                             |
+| tags                  |                                                                                  |
+| tenant_id             | 4bfc44be45494c43abe00e5a358feed9                                                 |
+| updated_at            | 2017-08-22T02:56:42Z                                                             |
++-----------------------+----------------------------------------------------------------------------------+
+[root@node-222-2nd ~(keystone_admin)]#
+[root@node-222-2nd ~(keystone_admin)]# nova boot --flavor m1.tiny --image cirros --security-groups default --nic port-id=acbfd43b-fa6a-4299-90b9-70f9dc5eb5f6 instance-1
++--------------------------------------+-----------------------------------------------+
+| Property                             | Value                                         |
++--------------------------------------+-----------------------------------------------+
+| OS-DCF:diskConfig                    | MANUAL                                        |
+| OS-EXT-AZ:availability_zone          |                                               |
+| OS-EXT-SRV-ATTR:host                 | -                                             |
+| OS-EXT-SRV-ATTR:hostname             | instance-1                                    |
+| OS-EXT-SRV-ATTR:hypervisor_hostname  | -                                             |
+| OS-EXT-SRV-ATTR:instance_name        |                                               |
+| OS-EXT-SRV-ATTR:kernel_id            |                                               |
+| OS-EXT-SRV-ATTR:launch_index         | 0                                             |
+| OS-EXT-SRV-ATTR:ramdisk_id           |                                               |
+| OS-EXT-SRV-ATTR:reservation_id       | r-qjb98i14                                    |
+| OS-EXT-SRV-ATTR:root_device_name     | -                                             |
+| OS-EXT-SRV-ATTR:user_data            | -                                             |
+| OS-EXT-STS:power_state               | 0                                             |
+| OS-EXT-STS:task_state                | scheduling                                    |
+| OS-EXT-STS:vm_state                  | building                                      |
+| OS-SRV-USG:launched_at               | -                                             |
+| OS-SRV-USG:terminated_at             | -                                             |
+| accessIPv4                           |                                               |
+| accessIPv6                           |                                               |
+| adminPass                            | 3hxCKwT9Cjsf                                  |
+| config_drive                         |                                               |
+| created                              | 2017-08-22T03:10:28Z                          |
+| description                          | -                                             |
+| flavor                               | m1.tiny (1)                                   |
+| hostId                               |                                               |
+| host_status                          |                                               |
+| id                                   | e0194977-fa79-4bab-96ec-a96798977e57          |
+| image                                | cirros (818c123b-81c5-46c0-9be9-8f68cb080d6b) |
+| key_name                             | -                                             |
+| locked                               | False                                         |
+| metadata                             | {}                                            |
+| name                                 | instance-1                                    |
+| os-extended-volumes:volumes_attached | []                                            |
+| progress                             | 0                                             |
+| security_groups                      | default                                       |
+| status                               | BUILD                                         |
+| tags                                 | []                                            |
+| tenant_id                            | 4bfc44be45494c43abe00e5a358feed9              |
+| updated                              | 2017-08-22T03:10:28Z                          |
+| user_id                              | b82c199b81624fd98b7bf3a5e247139d              |
++--------------------------------------+-----------------------------------------------+
+[root@node-222-2nd ~(keystone_admin)]#
+	
