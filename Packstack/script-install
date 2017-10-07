@@ -17,6 +17,7 @@ packstack --gen-answer-file=answerfile.txt
 # 192.168.0.2 nama-hostname nama-hostname.lab
 #reboot
 
+sed -i 's/CONFIG_PROVISION_DEMO=y/CONFIG_PROVISION_DEMO=n/g' answerfile.txt     # disable provisioning demo
 sed -i 's/CONFIG_CINDER_VOLUMES_SIZE=20G/CONFIG_CINDER_VOLUMES_SIZE=500G/g' answerfile.txt    # ganti 500G dengan alokasi disk untuk cinder volume sesuai kebutuhan
 sed -i 's/CONFIG_HEAT_INSTALL=n/CONFIG_HEAT_INSTALL=y/g' answerfile.txt       # enable heat
 sed -i 's/CONFIG_LBAAS_INSTALL=n/CONFIG_LBAAS_INSTALL=y/g' answerfile.txt     # enable lbaas
