@@ -1,0 +1,4 @@
+USER_NAME=ceph
+echo "${USER_NAME}      ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
+useradd -p "" $USER_NAME
+passwd -fu $USER_NAME
