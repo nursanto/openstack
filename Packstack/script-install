@@ -1,3 +1,4 @@
+INTERFACE_NAME=$(ip a | grep UP | grep BROADCAST | awk '{print $2}' | cut -d':' -f1 | head -n1)
 IPADDRESS=$(ip r | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | tail -1)
 HOST_NAME=$(hostname)
 echo "$IPADDRESS   $HOST_NAME" >> /etc/hosts
@@ -22,7 +23,7 @@ sed -i 's/CONFIG_HEAT_INSTALL=n/CONFIG_HEAT_INSTALL=y/g' answerfile.txt       # 
 sed -i 's/CONFIG_LBAAS_INSTALL=n/CONFIG_LBAAS_INSTALL=y/g' answerfile.txt     # enable lbaas
 sed -i 's/CONFIG_NEUTRON_FWAAS=n/CONFIG_NEUTRON_FWAAS=y/g' answerfile.txt     # enable fwaas
 sed -i 's/CONFIG_NEUTRON_VPNAAS=n/CONFIG_NEUTRON_VPNAAS=y/g' answerfile.txt   # enable vpnaas
-sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=br-ex:ens160/g' answerfile.txt # ganti ens160 dg interface yg dipakai. ex eth0/eno1/etc
+sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=br-ex:'"$INTERFACE_NAME"'/g' answerfile.txt
 sed -i 's/CONFIG_HEAT_CLOUDWATCH_INSTALL=n/CONFIG_HEAT_CLOUDWATCH_INSTALL=y/g' answerfile.txt   # enable cloudwatch
 
 packstack --answer-file=answerfile.txt | tee progres
