@@ -1,3 +1,7 @@
+IPADDRESS=$(ip r | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | tail -1)
+HOST_NAME=$(hostname)
+echo "$IPADDRESS   $HOST_NAME" >> /etc/hosts
+
 echo -e "LANG=en_US.utf-8 \nLC_ALL=en_US.utf-8" > /etc/environment
 yum -y update
 systemctl disable firewalld
@@ -12,13 +16,8 @@ yum update -y
 yum install -y openstack-packstack
 packstack --gen-answer-file=answerfile.txt
 
-#edit hostname add  ip hostname
-#ex :
-# 192.168.0.2 nama-hostname nama-hostname.lab
-#reboot
-
 sed -i 's/CONFIG_PROVISION_DEMO=y/CONFIG_PROVISION_DEMO=n/g' answerfile.txt     # disable provisioning demo
-sed -i 's/CONFIG_CINDER_VOLUMES_SIZE=20G/CONFIG_CINDER_VOLUMES_SIZE=500G/g' answerfile.txt    # ganti 500G dengan alokasi disk untuk cinder volume sesuai kebutuhan
+#sed -i 's/CONFIG_CINDER_VOLUMES_SIZE=20G/CONFIG_CINDER_VOLUMES_SIZE=500G/g' answerfile.txt    # ganti 500G dengan alokasi disk untuk cinder volume sesuai kebutuhan
 sed -i 's/CONFIG_HEAT_INSTALL=n/CONFIG_HEAT_INSTALL=y/g' answerfile.txt       # enable heat
 sed -i 's/CONFIG_LBAAS_INSTALL=n/CONFIG_LBAAS_INSTALL=y/g' answerfile.txt     # enable lbaas
 sed -i 's/CONFIG_NEUTRON_FWAAS=n/CONFIG_NEUTRON_FWAAS=y/g' answerfile.txt     # enable fwaas
