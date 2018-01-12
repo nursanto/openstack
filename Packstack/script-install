@@ -3,6 +3,9 @@ IPADDRESS=$(ip r | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3
 HOST_NAME=$(hostname)
 echo "$IPADDRESS   $HOST_NAME" >> /etc/hosts
 
+echo $INTERFACE_NAME
+echo $IPADDRESS
+
 echo -e "LANG=en_US.utf-8 \nLC_ALL=en_US.utf-8" > /etc/environment
 yum -y update
 systemctl disable firewalld
