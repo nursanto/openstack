@@ -1,0 +1,26 @@
+# cat /etc/cinder/cinder.conf
+...
+enabled_backends = lvmdriver-1,lvmdriver-2
+...
+[lvmdriver-1]
+volume_group=vg_ssd
+volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name=ssd
+iscsi_ip_address=192.168.10.186
+iscsi_helper=lioadm
+volumes_dir=/var/lib/cinder/volumes
+
+[lvmdriver-2]
+volume_group=vg_hdd
+volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name=hdd
+iscsi_ip_address=192.168.10.186
+iscsi_helper=lioadm
+volumes_dir=/var/lib/cinder/volumes
+...
+
+# systemctl restart $(systemctl | grep cinder | awk {'print $1'})
+# cinder service-list
+# cinder-manage volume update_host --currenthost aio-centos.lab --newhost aio-centos.lab@lvmdriver-1
+# openstack volume type create ssd
+# openstack volume type set e087f568-d69c-4d0b-a106-66ff58093f63 --property volume_backend_name=ssd
