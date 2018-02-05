@@ -1,0 +1,32 @@
+INTERFACE_NAME=$(ip a | grep UP | grep BROADCAST | awk '{print $2}' | cut -d':' -f1 | head -n1)
+IPADDRESS=$(ip r | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | tail -1)
+HOST_NAME=$(hostname)
+echo "$IPADDRESS   $HOST_NAME" >> /etc/hosts
+
+echo $INTERFACE_NAME
+echo $IPADDRESS
+
+echo -e "LANG=en_US.utf-8 \nLC_ALL=en_US.utf-8" > /etc/environment
+yum -y update
+systemctl disable firewalld
+systemctl stop firewalld
+systemctl disable NetworkManager
+systemctl stop NetworkManager
+systemctl enable network
+systemctl start network
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+yum install -y centos-release-openstack-ocata
+yum update -y
+yum install -y openstack-packstack
+packstack --gen-answer-file=answerfile.txt
+
+sed -i 's/CONFIG_PROVISION_DEMO=y/CONFIG_PROVISION_DEMO=n/g' answerfile.txt     # disable provisioning demo
+#sed -i 's/CONFIG_CINDER_VOLUMES_SIZE=20G/CONFIG_CINDER_VOLUMES_SIZE=500G/g' answerfile.txt    # ganti 500G dengan alokasi disk untuk cinder volume sesuai kebutuhan
+sed -i 's/CONFIG_HEAT_INSTALL=n/CONFIG_HEAT_INSTALL=y/g' answerfile.txt       # enable heat
+sed -i 's/CONFIG_LBAAS_INSTALL=n/CONFIG_LBAAS_INSTALL=y/g' answerfile.txt     # enable lbaas
+sed -i 's/CONFIG_NEUTRON_FWAAS=n/CONFIG_NEUTRON_FWAAS=y/g' answerfile.txt     # enable fwaas
+sed -i 's/CONFIG_NEUTRON_VPNAAS=n/CONFIG_NEUTRON_VPNAAS=y/g' answerfile.txt   # enable vpnaas
+sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=br-ex:'"$INTERFACE_NAME"'/g' answerfile.txt
+sed -i 's/CONFIG_HEAT_CLOUDWATCH_INSTALL=n/CONFIG_HEAT_CLOUDWATCH_INSTALL=y/g' answerfile.txt   # enable cloudwatch
+
+packstack --answer-file=answerfile.txt | tee progres

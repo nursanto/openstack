@@ -1,3 +1,5 @@
 cd /usr/share/openstack-dashboard/openstack_dashboard/dashboards/project/static/dashboard/project/workflow/launch-instance/
 sed -i 's/create_volume_default: true/create_volume_default: false/g' launch-instance-model.service.js
 systemctl status httpd memcached
+systemctl restart httpd memcached
+systemctl status httpd memcached
