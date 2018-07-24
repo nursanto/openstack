@@ -1,0 +1,14 @@
+#####install vbmc & remove repo after install
+yum install -y https://www.rdoproject.org/repos/rdo-release.rpm
+yum install -y python2-virtualbmc
+yum install -y python-setuptools
+rm -rf /etc/yum.repos.d/rdo-*
+
+##### keyless ssh undercloud to kvm
+ssh-keygen -t rsa
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.26.11 #ip-kvm
+
+##### add vbmc in undercloud
+vbmc add oc-controller --port 7001 --username admin --password password --libvirt-uri qemu+ssh://root@192.168.26.11/system  #ip-kvm
+vbmc start oc-controller
+ipmitool -I lanplus -U admin -P password -H 127.0.0.1 -p 7001 power status
