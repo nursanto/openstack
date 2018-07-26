@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "name": "controller0",
+      "pm_user": "admin",
+      "arch": "x86_64",
+      "mac": [ "52:54:81:00:a0:01" ],
+      "cpu": "8",
+      "memory": "8192",
+      "disk": "100",
+      "pm_addr": "127.0.0.1",
+	  "pm_port":"7001",
+      "pm_type": "pxe_ipmitool",
+      "pm_password": "password"
+    },
+    {
+      "name": "compute0",
+      "pm_user": "admin",
+      "arch": "x86_64",
+      "mac": [ "52:54:81:01:a0:01" ],
+      "cpu": "8",
+      "memory": "8192",
+      "disk": "100",
+      "pm_addr": "127.0.0.1",
+	  "pm_port":"7002",
+      "pm_type": "pxe_ipmitool",
+      "pm_password": "password"
+    },
+    {
+      "name": "ceph0",
+      "pm_user": "admin",
+      "arch": "x86_64",
+      "mac": [ "52:54:81:02:a0:01" ],
+      "cpu": "4",
+      "memory": "4096",
+      "disk": "100",
+      "pm_addr": "127.0.0.1",
+	  "pm_port":"7003",
+      "pm_type": "pxe_ipmitool",
+      "pm_password": "password"
+    }
+  ]
+}
