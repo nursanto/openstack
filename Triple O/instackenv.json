@@ -9,7 +9,7 @@
       "memory": "8192",
       "disk": "100",
       "pm_addr": "127.0.0.1",
-	  "pm_port":"7001",
+	  "pm_port": "7001",
       "pm_type": "pxe_ipmitool",
       "pm_password": "password"
     },
@@ -22,7 +22,7 @@
       "memory": "8192",
       "disk": "100",
       "pm_addr": "127.0.0.1",
-	  "pm_port":"7002",
+	  "pm_port": "7002",
       "pm_type": "pxe_ipmitool",
       "pm_password": "password"
     },
@@ -35,7 +35,7 @@
       "memory": "4096",
       "disk": "100",
       "pm_addr": "127.0.0.1",
-	  "pm_port":"7003",
+	  "pm_port": "7003",
       "pm_type": "pxe_ipmitool",
       "pm_password": "password"
     }

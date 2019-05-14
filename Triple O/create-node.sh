@@ -6,6 +6,7 @@ sleep 5
 qemu-img create -f qcow2 /var/lib/libvirt/images/oc-ctrl0.qcow2 100G
 qemu-img create -f qcow2 /var/lib/libvirt/images/oc-cmpt0.qcow2 100G
 qemu-img create -f qcow2 /var/lib/libvirt/images/oc-ceph0.qcow2 100G
+qemu-img create -f qcow2 /var/lib/libvirt/images/oc-ceph1.qcow2 100G
 #qemu-img create -f qcow2 /var/lib/libvirt/images/oc-ceph0-1.qcow2 100G
 #qemu-img create -f qcow2 /var/lib/libvirt/images/oc-ceph0-2.qcow2 100G
 #qemu-img create -f qcow2 /var/lib/libvirt/images/oc-ceph0-3.qcow2 100G
@@ -48,6 +49,19 @@ virt-install \
 --boot network,hd,menu=on \
 --disk /var/lib/libvirt/images/oc-ceph0.qcow2 \
 --network bridge=br4,mac=52:54:81:02:a0:01 \
+--noautoconsole \
+--os-variant rhel7 \
+--noreboot
+
+sleep 10
+virt-install \
+--name oc-ceph1 \
+--memory 4096 \
+--vcpus 4 \
+--import \
+--boot network,hd,menu=on \
+--disk /var/lib/libvirt/images/oc-ceph1.qcow2 \
+--network bridge=br4,mac=52:54:81:02:a0:02 \
 --noautoconsole \
 --os-variant rhel7 \
 --noreboot
