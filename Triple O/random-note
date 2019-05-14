@@ -1,0 +1,10 @@
+links:
+dns-forwarder
+https://www.akadia.com/services/howto_forward_dns.html
+https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04
+
+sriov
+http://krsacme.com/post/osp10-sriov-deploy/
+https://github.com/lightheadoc/NFV/blob/master/nic-configs/compute-dpdksriov.yaml
+https://github.com/lightheadoc/NFV/blob/master/roles_data.yaml
+
