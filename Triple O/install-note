@@ -75,6 +75,7 @@ openstack baremetal node list
 for node in $(openstack baremetal node list --fields uuid -f value);do openstack baremetal node manage $node ; done
 
 openstack overcloud node introspect --all-manageable --provide
+# openstack overcloud node introspect [NODE UUID] --provide
 sudo journalctl -l -u openstack-ironic-inspector -u openstack-ironicinspector-dnsmasq -u openstack-ironic-conductor -f
 
 openstack baremetal introspection data save  | jq '.inventory.disks'
