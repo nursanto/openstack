@@ -8,5 +8,8 @@ http://krsacme.com/post/osp10-sriov-deploy/
 https://github.com/lightheadoc/NFV/blob/master/nic-configs/compute-dpdksriov.yaml
 https://github.com/lightheadoc/NFV/blob/master/roles_data.yaml
 
+ironic
+https://www.golinuxcloud.com/ironic-node-delete-is-associated-with-instance/
+
 add static route
 https://my.esecuredata.com/index.php?/knowledgebase/article/2/add-a-static-route-on-centos
