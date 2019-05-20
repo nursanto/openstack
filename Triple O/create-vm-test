@@ -1,0 +1,10 @@
+#!/bin/bash
+# wget http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
+
+openstack image create --disk-format qcow2 --container-format bare --public --file cirros-0.4.0-x86_64-disk.img cirros.image
+openstack network create net1
+openstack subnet create subnet1 --network net1 --subnet-range 192.0.2.0/24
+openstack router create router1
+openstack router add subnet router1 subnet1
+openstack flavor create --ram 512 --vcpus 1 --disk 10 cirros.flavor
+openstack server create --flavor cirros.flavor --image cirros.image --security-group default cirros.vm
