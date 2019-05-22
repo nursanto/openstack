@@ -7,6 +7,9 @@ sriov
 http://krsacme.com/post/osp10-sriov-deploy/
 https://github.com/lightheadoc/NFV/blob/master/nic-configs/compute-dpdksriov.yaml
 https://github.com/lightheadoc/NFV/blob/master/roles_data.yaml
+https://www.cisco.com/c/en/us/td/docs/net_mgmt/virtual_topology_system/2_6_1/user_guide/Cisco_VTS_2_6_1_User_Guide/Cisco_VTS_2_6_User_Guide_appendix_01110.pdf
+https://docs.infoblox.com/display/NOSIG/Setting+up+OpenStack+with+SRIOV
+https://cavium.com/solutions/Documents/UsersGuide_OpenStack_SR-IOV.pdf
 
 ironic
 https://www.golinuxcloud.com/ironic-node-delete-is-associated-with-instance/
