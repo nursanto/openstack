@@ -7,6 +7,6 @@ openstack subnet create subnet1 --network net1 --subnet-range 192.0.2.0/24
 openstack router create router1
 openstack router add subnet router1 subnet1
 openstack flavor create --ram 512 --vcpus 1 --disk 10 cirros.flavor
-openstack server create --flavor cirros.flavor --image cirros.image --security-group default cirros.vm --wait
+openstack server create --nic net-id=net1 --flavor cirros.flavor --image cirros.image --security-group default cirros.vm --wait
 sleep 2
 openstack server list
