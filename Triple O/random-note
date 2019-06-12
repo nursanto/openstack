@@ -1,4 +1,8 @@
 links:
+
+redhat doc
+https://access.redhat.com/documentation/en-us/reference_architectures/2017/html-single/deploying_mobile_networks_using_red_hat_openstack_platform_10/index
+
 dns-forwarder
 https://www.akadia.com/services/howto_forward_dns.html
 https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04
