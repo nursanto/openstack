@@ -1,3 +1,6 @@
+#### TS Instalation note
+openstack stack failures list overcloud --long
+
 #####note
 vim ~/.vimrc
 set tabstop=2
