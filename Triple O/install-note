@@ -1,5 +1,6 @@
 #### TS Instalation note
 openstack stack failures list overcloud --long
+more /var/log/cloud-init.log
 
 #####note
 vim ~/.vimrc
