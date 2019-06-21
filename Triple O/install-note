@@ -1,6 +1,8 @@
 #### TS Instalation note
 openstack stack failures list overcloud --long
 more /var/log/cloud-init.log
+ironic node-set-provision-state compute4 deleted
+
 
 #####note
 vim ~/.vimrc
