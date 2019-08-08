@@ -1,0 +1,19 @@
+cp rhel-server-7.5-x86_64-kvm.qcow2 /tmp/rhel-server-7.5-x86_64-kvm.qcow2
+yum -y install libguestfs-tools.noarch
+virt-customize -a rhel-server-7.5-x86_64-kvm.qcow2 --root-password password:redhat
+virt-customize -a rhel-server-7.5-x86_64-kvm.qcow2 --run-command 'sed -i -e "s/.*PasswordAuthentication.*/PasswordAuthentication yes/" /etc/ssh/sshd_config'
+virt-customize -a rhel-server-7.5-x86_64-kvm.qcow2 --run-command 'sed -i -e "s/.*PermitRootLogin.*/PermitRootLogin yes/" /etc/ssh/sshd_config'
+qemu-img resize rhel-server-7.5-x86_64-kvm.qcow2 +50G
+cp rhel-server-7.5-x86_64-kvm.qcow2 /var/lib/libvirt/images/undercloud.qcow2
+
+virt-install --name undercloud-10.lab --memory 8192 \
+--arch x86_64 \
+--vcpus 4 \
+--os-type linux \
+--os-variant rhel7 \
+--disk /var/lib/libvirt/images/undercloud.qcow2,format=qcow2,bus=virtio \
+--vnc \
+--noautoconsole \
+--network network=nat,model=virtio \
+--network network=pxe,model=virtio \
+--import
