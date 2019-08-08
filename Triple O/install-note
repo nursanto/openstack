@@ -13,7 +13,7 @@ set tabstop=2
 yum install -y https://www.rdoproject.org/repos/rdo-release.rpm
 yum install -y python2-virtualbmc
 yum install -y python-setuptools
-rm -rf /etc/yum.repos.d/rdo-*
+yum  autoremove rdo-release.noarch
 
 ##### keyless ssh undercloud to kvm
 ssh-keygen -t rsa
