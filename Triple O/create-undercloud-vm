@@ -17,3 +17,7 @@ virt-install --name undercloud-10.lab --memory 8192 \
 --network network=nat,model=virtio \
 --network network=pxe,model=virtio \
 --import
+
+
+# disable cloud init
+touch /etc/cloud/cloud-init.disabled
