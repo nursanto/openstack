@@ -21,3 +21,21 @@ virt-install --name undercloud-10.lab --memory 8192 \
 
 # disable cloud init
 touch /etc/cloud/cloud-init.disabled
+
+
+#### use iso
+qemu-img create -f qcow2 /var/lib/libvirt/images/oc-undercloud.qcow2 50G
+
+sleep 5
+virt-install \
+--name oc-undercloud \
+--memory 8192 \
+--cpu host,+svm \
+--vcpus 8 \
+--import \
+--disk /var/lib/libvirt/images/oc-undercloud.qcow2 \
+--network network=nat \
+--network network=pxe \
+--os-variant rhel7 \
+--noautoconsole \
+--noreboot
