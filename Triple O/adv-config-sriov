@@ -1,0 +1,41 @@
+## adv-config-sriov
+
+--- compute node ---
+# cat /etc/default/grub
+...
+GRUB_CMDLINE_LINUX_DEFAULT="... nomdmonddf nomdmonisw intel_iommu=on ..."
+...
+# update-grub
+# reboot
+# echo '7' > /sys/class/net/eth3/device/sriov_numvfs
+# cat /sys/class/net/eth3/device/sriov_totalvfs
+# ip link set eth3 up
+# ip link show eth3
+# lspci | grep Ethernet
+# echo "echo '7' > /sys/class/net/eth3/device/sriov_numvfs" >> /etc/rc.local
+# cat /etc/nova/nova.conf
+...
+[default]
+pci_passthrough_whitelist = { "devname": "eth3", "physical_network": "physnet2"}
+...
+
+
+--- controller node ---
+# cat /etc/neutron/plugins/ml2/ml2_conf.ini
+...
+mechanism_drivers = openvswitch,sriovnicswitch
+...
+# lspci -nn | grep -i ethernet
+# cat /etc/neutron/plugins/ml2/ml2_conf_sriov.ini
+...
+supported_pci_vendor_devs = 8086:10ed
+...
+# cat /etc/init/neutron-server.conf
+...
+--config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugin.ini
+--config-file /etc/neutron/plugins/ml2/ml2_conf_sriov.ini
+...
+#
+
+source:
+https://docs.openstack.org/liberty/networking-guide/adv-config-sriov.html
